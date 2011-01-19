@@ -1,0 +1,202 @@
+// This import applies a global reset to any page that imports this stylesheet.
+@import "blueprint/reset";
+
+// To configure blueprint, edit the partials/_base.sass file.
+@import "partials/base";
+
+// Import all the default blueprint modules so that we can access their mixins.
+@import "blueprint";
+
+// Import the non-default scaffolding module.
+@import "blueprint/debug";
+@import "compass/css3/background-size";
+@import "compass/utilities/lists/horizontal-list";
+@import "compass/utilities/sprites/sprite-img";
+@import "compass/layout/sticky-footer";
+@import "compass/utilities/lists/bullets";
+// Generate the blueprint framework according to your configuration:
+@include blueprint;
+@include typography;
+@include sticky-footer(130px, "#main", "#main_footer", "#footer");
+#main
+{
+
+	background-color: #f3f3f3;
+	width: 940px;
+	margin-right:  auto; 
+	margin-left:  auto; 
+
+}
+
+.container {
+	
+	
+	/* @include showgrid("grid.png"); */
+	.header {
+		/* background-image:image-url("header_bgimg.jpg");
+		height: image-height("header_bgimg.jpg"); */
+		@include sprite-background("header_bgimg.jpg",image-width("header_bgimg.jpg"),image-height("header_bgimg.jpg"));
+
+		img {
+			position: relative;
+			left: 10px;
+			top: 6px;
+
+		}
+		.topmenu {
+			margin-top: 3px;
+			@include column(8);
+			float: right;	
+			ul {
+				@include horizontal-list(5px,right);
+			}
+			a {
+				color: $topmenu-linkcolor;
+				font-size: $topmenu-linksize;
+				text-decoration: none;
+				text-transform: uppercase;
+			}
+			a:hover 
+			{
+				text-decoration: underline;
+			}
+		}
+	}
+
+	.main {
+		@include column(16,true);
+	}
+	.mainmenu {
+		@include column(16,true);
+		@include horizontal-list(0px,left);
+		li {
+			background-image: image-url("menuBtn.png"); 
+			@include sprite-row(1,image-height("menuBtn.png")/2);
+			height: image-height("menuBtn.png")/2;
+			width: image-width("menuBtn.png");
+			a {
+				font-size: 11px;
+				vertical-align: center;
+				height: image-height("menuBtn.png")/2;
+				width: image-width("menuBtn.png");
+				display: block;
+				text-align: center;
+				padding-top: 11px;
+				color: #7a0414;
+				text-decoration: none;
+				text-transform: uppercase;
+				&:hover {
+					color: #fff;
+				}
+			}
+			&:hover {
+				@include sprite-row(2,image-height("menuBtn.png")/2);
+			}
+		}
+		li:first-child {
+			background-image: image-url("menuBtnLeft.png"); 
+			@include sprite-row(1,image-height("menuBtnLeft.png")/2);
+			height: image-height("menuBtnLeft.png")/2;
+			width: image-width("menuBtnLeft.png");
+			&:hover {
+				@include sprite-row(2,image-height("menuBtnLeft.png")/2);
+			}
+
+		}
+		li:last-child {
+			background-image: image-url("menuBtnRight.png"); 
+			@include sprite-row(1,image-height("menuBtnRight.png")/2);
+			height: image-height("menuBtnRight.png")/2;
+			width: image-width("menuBtnRight.png");
+			&:hover {
+				@include sprite-row(2,image-height("menuBtnRight.png")/2);
+			}
+
+		}	
+	}
+	.submenu {
+		@include column(16,true);
+		@include horizontal-list(10px,left);
+		margin-left: 10px;
+		margin-bottom: 4px;
+		a {
+			color: #000;
+			text-decoration: none;
+			&:hover {
+				color: #7a0414;
+			}
+		}
+
+	}
+	hr {
+		@include colruler(#b1b1b1);
+		margin-bottom: 4px;
+	}
+	.column-1-2-3-4 {
+		@include column(16,true);
+		background-image: image-url("content_vertical_separator.png");
+		display: block;
+		overflow: hidden;
+	}
+	.column-1-2 {
+		@include column(8);
+	}
+	.column-3-4 {
+		@include column(8,true);
+	}
+	.column-1 {
+		@include column(4);
+	}
+	.column-2 {
+		@include column(4);
+	}
+	.column-3 {
+		@include column(4);
+	}
+	.column-4 {
+		@include column(4,true);
+	}
+
+	.content {
+		padding: 7px 10px 0 10px;
+		h1 {
+			color: #7a0414;
+			font-weight: bold;
+		}
+		h2 {
+			color: #7a0414;
+			font-weight: bold;
+		}	
+		h3 {
+			color: #7a0414;
+			font-weight: bold;
+		}	
+	}
+
+}
+#footer {
+  background: #fff; 
+  ul {
+  	@include no-bullet;
+  	margin: 0px;
+  	padding: 0px;
+  	}
+	.column-1-2-3-4 {
+		background: #bbb;
+		.content {
+			padding-top: 10px;
+			margin-bottom: 10px;		
+		}
+	}
+	h3 {
+		margin-bottom: 0.5em;
+	}
+	a {
+		color: #000;
+		text-decoration: none;
+		&:hover {
+			color: #7a0414;
+		}
+	}
+}
+

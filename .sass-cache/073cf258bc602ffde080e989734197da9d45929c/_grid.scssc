@@ -1,0 +1,413 @@
+3.0.24 (Classy Cassidy)
+6cbf1aca3aa02734977200d7212ac8f3ec3cad0f
+o:Sass::Tree::RootNode
+:
+@linei:@options{:
+style:expanded:load_paths["C:\jobber\sid\ulighed/src"jC:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/compass-0.10.6/frameworks/blueprint/stylesheets"~C:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/compass-0.10.6/frameworks/_blueprint_deprecated_imports/stylesheets"hC:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/compass-0.10.6/frameworks/compass/stylesheets"|C:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/compass-0.10.6/frameworks/_compass_deprecated_imports/stylesheets"gC:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/compass-960-plugin-0.10.0/lib/../stylesheets"eC:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/html5-boilerplate-0.2.6/lib/../stylesheets:
+cacheT:cache_location"&C:\jobber\sid\ulighed/.sass-cache:syntax:	scss:line_commentsT:
+quietT:filename"|C:/Users/Thomas/Desktop/compass.app/lib/ruby/gem/gems/compass-0.10.6/frameworks/blueprint/stylesheets/./blueprint/_grid.scss:css_filename"1C:\jobber\sid\ulighed/stylesheets/screen.css:property_syntax0:@has_childrenT:@template" //  --------------------------------------------------------------
+//  SASS Gridification
+//  * Author:   Chris Eppstein
+//  A SASS adaptation of Blueprint CSS
+//  * Version:         0.7.1 (2008-02-25)
+//  * Website:         http://code.google.com/p/blueprintcss/
+//  Based on work by:
+//  * Lorin Tackett     [lorintackett.com]
+//  * Olav Bjorkoy      [bjorkoy.com]
+//  * Nathan Borror     [playgroundblues.com]
+//  * Jeff Croft        [jeffcroft.com]
+//  * Christian Metts   [mintchaos.com]
+//  * Khoi Vinh         [subtraction.com]
+//  Read more about using a grid here:
+//  * http://www.subtraction.com/2007/03/18/oh-yeeaahh
+//  --------------------------------------------------------------
+
+@import "compass/utilities/general/float";
+@import "compass/utilities/general/clearfix";
+
+// The number of columns in the grid.
+$blueprint_grid_columns: 24 !default;
+
+// The width of a column
+$blueprint_grid_width: 30px !default;
+
+// The amount of margin between columns
+$blueprint_grid_margin: 10px !default;
+
+// The width of a column including the margin. With default settings this is `40px`.
+$blueprint_grid_outer_width: $blueprint_grid_width + $blueprint_grid_margin;
+
+// The width of the container. With default settings this is `950px`.
+$blueprint_container_size: $blueprint_grid_outer_width * $blueprint_grid_columns - $blueprint_grid_margin;
+
+// Generates presentational class names that you can use
+// in your html to layout your pages.
+//
+// #### Note:
+// Best practices discourage using this mixin,
+// but it is provided to support legacy websites
+// and to test the sass port against blueprint's example pages.
+
+@mixin blueprint-grid {
+  // A container should group all your columns
+  .container {
+    @include container; }
+  .column, #{enumerate("div.span", 1, $blueprint_grid_columns)} {
+    @include column-base; }
+  // The last column in a row needs this class (or mixin) or it will end up on the next row.
+  .last, div.last {
+    @include last; }
+  // Use these classes (or mixins) to set the width of a column.
+  @for $n from 1 to $blueprint_grid_columns {
+    .span-#{$n} {
+      @include span($n); } }
+  .span-#{$blueprint_grid_columns}, div.span-#{$blueprint_grid_columns} {
+    @include span($blueprint_grid_columns);
+    margin: 0; }
+  input, textarea, select {
+    @for $n from 1 through $blueprint_grid_columns {
+      &.span-#{$n} {
+        @include span($n, true); } } }
+  // Add these to a column to append empty cols.
+  @for $n from 1 to $blueprint_grid_columns {
+    .append-#{$n} {
+      @include append($n); } }
+  // Add these to a column to prepend empty cols.
+  @for $n from 1 to $blueprint_grid_columns {
+    .prepend-#{$n} {
+      @include prepend($n); } }
+  // Use these classes on an element to push it into the
+  // next column, or to pull it into the previous column.
+  #{enumerate(".pull", 1, $blueprint_grid_columns)} {
+    @include pull-base; }
+  @for $n from 1 through $blueprint_grid_columns {
+    .pull-#{$n} {
+      @include pull-margins($n); } }
+  #{enumerate(".push", 1, $blueprint_grid_columns)} {
+    @include push-base; }
+  @for $n from 1 through $blueprint_grid_columns {
+    .push-#{$n} {
+      @include push-margins($n); } }
+  .prepend-top {
+    @include prepend-top; }
+  .append-bottom {
+    @include append-bottom; } }
+
+// A container for your columns.
+//
+// #### Note:
+// If you use this mixin without the class and want to support ie6
+// you must set text-align left on your container element in an IE stylesheet.
+@mixin container {
+  width: $blueprint_container_size;
+  margin: 0 auto;
+  @include clearfix; }
+
+// The last column in a row needs this mixin or it will end up
+// on the next row in some browsers.
+@mixin last {
+  margin-right: 0; }
+
+// Use this mixins to set the width of n columns.
+@mixin column($n, $last: false) {
+  @include column-base($last);
+  @include span($n); }
+
+// Set only the width of an element to align it with the grid.
+// Most of the time you'll want to use `+column` instead.
+//
+// This mixin is especially useful for aligning tables to the grid.
+@mixin span($n, $override: false) {
+  $width: $blueprint_grid_width * $n + $blueprint_grid_margin * ($n - 1);
+  @if $override {
+    width: $width !important; }
+  @else {
+    width: $width; } }
+
+// The basic set of styles needed to make an element
+// behave like a column:
+//
+// * floated to left
+// * gutter margin on the right (unless the last column)
+// * Some IE fixes
+//
+// #### Note:
+// This mixin gets applied automatically when using `+column`
+// so you probably don't need to use it directly unless
+// you need to deviate from the grid or are trying
+// to reduce the amount of generated CSS.
+@mixin column-base($last: false) {
+  @include float-left;
+  @if $last {
+    @include last; }
+  @else {
+    margin-right: $blueprint_grid_margin; }
+  * html & {
+    overflow-x: hidden; } }
+
+// Mixin to a column to append n empty columns to the right
+// by adding right padding to the column.
+@mixin append($n) {
+  padding-right: $blueprint_grid_outer_width * $n; }
+
+// Mixin to a column to append n empty columns to the left
+// by adding left padding to the column.
+@mixin prepend($n) {
+  padding-left: $blueprint_grid_outer_width * $n; }
+
+// Adds trailing margin.
+@mixin append-bottom($amount: 1.5em) {
+  margin-bottom: $amount; }
+
+// Adds leading margin.
+@mixin prepend-top($amount: 1.5em) {
+  margin-top: $amount; }
+
+// Base styles that make it possible to pull an element to the left.
+// #### Note:
+// This mixin gets applied automatically when using `+pull`
+// so you probably don't need to use it directly unless
+// you need to deviate from the grid or are trying
+// to reduce the amount of generated CSS.
+@mixin pull-base {
+  @include float-left;
+  position: relative; }
+
+// The amount of pulling for element to the left.
+// #### Note:
+// This mixin gets applied automatically when using `+pull`
+// so you probably don't need to use it directly unless
+// you need to deviate from the grid or are trying
+// to reduce the amount of generated CSS.
+@mixin pull-margins($n, $last: false) {
+  @if $last {
+    margin-left: -$blueprint_grid_outer_width * $n + $blueprint_grid_margin; }
+  @else {
+    margin-left: -$blueprint_grid_outer_width * $n; } }
+
+// Moves a column `n` columns to the left.
+//
+// This mixin can also be used to change the display order of columns.
+//
+// If pulling past the last (visually) element in a row,
+// pass `true` as the second argument so the calculations can adjust
+// accordingly.
+
+// For example:
+//
+// HTML:
+// <pre class="source-code html">
+// <div id="one">One</div>
+// <div id="two">Two</div>
+// </pre>
+// Sass:
+// <pre class="source-code sass">
+// #one
+//   +column(18, true)
+//   +prepend(6)
+// #two
+//   +column(6)
+//   +pull(18, true)
+// </pre>
+@mixin pull($n, $last: false) {
+  @include pull-base;
+  @include pull-margins($n, $last); }
+
+@mixin push-base {
+  @include float-right;
+  position: relative; }
+
+@mixin push-margins($n) {
+  margin: 0 (-$blueprint_grid_outer_width * $n) 1.5em $blueprint_grid_outer_width * $n; }
+
+// mixin to a column to push it n columns to the right
+@mixin push($n) {
+  @include push-base;
+  @include push-margins($n); }
+
+// Border on right hand side of a column.
+@mixin border($border_color: #eeeeee, $border_width: 1px) {
+  padding-right: $blueprint_grid_margin / 2 - $border_width;
+  margin-right: $blueprint_grid_margin / 2;
+  border-right: #{$border_width} solid #{$border_color}; }
+
+// Border with more whitespace, spans one column.
+@mixin colborder($border_color: #eeeeee, $border_width: 1px) {
+  padding-right: floor(($blueprint_grid_width + 2 * $blueprint_grid_margin - $border_width) / 2);
+  margin-right: ceil(($blueprint_grid_width + 2 * $blueprint_grid_margin - $border_width) / 2);
+  border-right: #{$border_width} solid #{$border_color}; }
+
+// Mixin this to an hr to make a horizontal ruler across a column.
+@mixin colruler($border_color: #dddddd) {
+  background: $border_color;
+  color: $border_color;
+  clear: both;
+  float: none;
+  width: 100%;
+  height: 0.1em;
+  margin: 0 0 1.45em;
+  border: none; }
+
+// Mixin this to an hr to make a horizontal spacer across a column.
+@mixin colspacer {
+  @include colruler;
+  background: white;
+  color: white;
+  visibility: hidden; }
+:@children[9o:Sass::Tree::CommentNode;i;@:@silenti :@lines[ ;[ :@value"º/*  --------------------------------------------------------------
+ *  SASS Gridification
+ *  * Author:   Chris Eppstein
+ *  A SASS adaptation of Blueprint CSS
+ *  * Version:         0.7.1 (2008-02-25)
+ *  * Website:         http://code.google.com/p/blueprintcss/
+ *  Based on work by:
+ *  * Lorin Tackett     [lorintackett.com]
+ *  * Olav Bjorkoy      [bjorkoy.com]
+ *  * Nathan Borror     [playgroundblues.com]
+ *  * Jeff Croft        [jeffcroft.com]
+ *  * Christian Metts   [mintchaos.com]
+ *  * Khoi Vinh         [subtraction.com]
+ *  Read more about using a grid here:
+ *  * http://www.subtraction.com/2007/03/18/oh-yeeaahh
+ *  -------------------------------------------------------------- */o:Sass::Tree::ImportNode
+;@;0;i:@imported_filename"$compass/utilities/general/float;[ o;
+;@;0;i;"'compass/utilities/general/clearfix;[ o;;i;@;i ;[ ;[ ;"-/* The number of columns in the grid. */o:Sass::Tree::VariableNode:
+@expro:Sass::Script::Number:@context:default;{ ;i:@numerator_units[ ;i:@original"24:@denominator_units[ :
+@name"blueprint_grid_columns;i;@;[ :@guarded"!defaulto;;i;@;i ;[ ;[ ;" /* The width of a column */o;;o;; ;!;{ ;i#;"["px;i;#"	30px;$[ ;%"blueprint_grid_width;i;@;[ ;&"!defaulto;;i ;@;i ;[ ;[ ;"//* The amount of margin between columns */o;;o;; ;!;{ ;i;"["px;i!;#"	10px;$[ ;%"blueprint_grid_margin;i!;@;[ ;&"!defaulto;;i#;@;i ;[ ;[ ;"\/* The width of a column including the margin. With default settings this is `40px`. */o;;o:Sass::Script::Operation; ;!;i$:@operator:	plus;{ :@operand1o:Sass::Script::Variable	; ;!;%"blueprint_grid_width;i$;@M:@operand2o;+	; ;!;%"blueprint_grid_margin;i$;@M;%"blueprint_grid_outer_width;i$;@;[ ;&0o;;i&;@;i ;[ ;[ ;"M/* The width of the container. With default settings this is `950px`. */o;;o;'; ;!;i';(:
+minus;{ ;*o;'; ;!;i';(:
+times;@Z;*o;+	; ;!;%"blueprint_grid_outer_width;i';@Z;,o;+	; ;!;%"blueprint_grid_columns;i';@Z;,o;+	; ;!;%"blueprint_grid_margin;i';@Z;%"blueprint_container_size;i';@;[ ;&0o;;i);@;i ;[ ;[ ;"/* Generates presentational class names that you can use
+ * in your html to layout your pages.
+ *
+ * #### Note:
+ * Best practices discourage using this mixin,
+ * but it is provided to support legacy websites
+ * and to test the sass port against blueprint's example pages. */o:Sass::Tree::MixinDefNode:
+@args[ ;%"blueprint-grid;i1;@;T;[o;;i2;@;i ;[ ;[ ;"4/* A container should group all your columns */o:Sass::Tree::RuleNode:
+@tabsi ;@:
+@rule[".container;T;i3;[o:Sass::Tree::MixinNode
+;0[ ;%"container;i4;@;[ o;1;2i ;@;3[".column, o:Sass::Script::Funcall
+;0[o:Sass::Script::String
+; ;!;i5;{ :
+@type:string;"div.spano;; ;!;@~;i;"[ ;i5;#"1;$[ o;+	; ;!;%"blueprint_grid_columns;i5;@~; ;!;%"enumerate;i5;@~;T;i5;[o;4
+;0[ ;%"column-base;i6;@;[ o;;i7;@;i ;[ ;[ ;"b/* The last column in a row needs this class (or mixin) or it will end up on the next row. */o;1;2i ;@;3[".last, div.last;T;i8;[o;4
+;0[ ;%"	last;i9;@;[ o;;i:;@;i ;[ ;[ ;"F/* Use these classes (or mixins) to set the width of a column. */o:Sass::Tree::ForNode:@too;+	; ;!;%"blueprint_grid_columns;i;;{ ;@;T:	@var"n;i;:@exclusiveT;[o;1;2i ;@;3[".span-o;+	; ;!;%"n;i<;{ ;T;i<;[o;4
+;0[o;+	; ;!;%"n;i=;{ ;%"	span;i=;@;[ :
+@fromo;; ;!;{ ;i;"[ ;i;;#"1;$[ o;1;2i ;@;3[	".span-o;+	; ;!;%"blueprint_grid_columns;i>;{ ", div.span-o;+	; ;!;%"blueprint_grid_columns;i>;{ ;T;i>;[o;4
+;0[o;+	; ;!;%"blueprint_grid_columns;i?;{ ;%"	span;i?;@;[ o:Sass::Tree::PropNode;2i ;%["margin;@:@prop_syntax:new;o;6; ;!;7:identifier;"0;i@;[ o;1;2i ;@;3["input, textarea, select;T;iA;[o;9;:o;+	; ;!;%"blueprint_grid_columns;iB;{ ;@;T;;"n;iB;<F;[o;1;2i ;@;3["&.span-o;+	; ;!;%"n;iC;{ ;T;iC;[o;4
+;0[o;+	; ;!;%"n;iD;{ o:Sass::Script::Bool	; ;!;iD;@Ý;T;%"	span;iD;@;[ ;=o;; ;!;{ ;i;"[ ;iB;#"1;$[ o;;iE;@;i ;[ ;[ ;"6/* Add these to a column to append empty cols. */o;9;:o;+	; ;!;%"blueprint_grid_columns;iF;{ ;@;T;;"n;iF;<T;[o;1;2i ;@;3[".append-o;+	; ;!;%"n;iG;{ ;T;iG;[o;4
+;0[o;+	; ;!;%"n;iH;{ ;%"append;iH;@;[ ;=o;; ;!;{ ;i;"[ ;iF;#"1;$[ o;;iI;@;i ;[ ;[ ;"7/* Add these to a column to prepend empty cols. */o;9;:o;+	; ;!;%"blueprint_grid_columns;iJ;{ ;@;T;;"n;iJ;<T;[o;1;2i ;@;3[".prepend-o;+	; ;!;%"n;iK;{ ;T;iK;[o;4
+;0[o;+	; ;!;%"n;iL;{ ;%"prepend;iL;@;[ ;=o;; ;!;{ ;i;"[ ;iJ;#"1;$[ o;;iM;@;i ;[ ;[ ;"v/* Use these classes on an element to push it into the
+ * next column, or to pull it into the previous column. */o;1;2i ;@;3[o;5
+;0[o;6
+; ;!;iO;{ ;7;8;"
+.pullo;; ;!;@);i;"[ ;iO;#"1;$[ o;+	; ;!;%"blueprint_grid_columns;iO;@); ;!;%"enumerate;iO;@);T;iO;[o;4
+;0[ ;%"pull-base;iP;@;[ o;9;:o;+	; ;!;%"blueprint_grid_columns;iQ;{ ;@;T;;"n;iQ;<F;[o;1;2i ;@;3[".pull-o;+	; ;!;%"n;iR;{ ;T;iR;[o;4
+;0[o;+	; ;!;%"n;iS;{ ;%"pull-margins;iS;@;[ ;=o;; ;!;{ ;i;"[ ;iQ;#"1;$[ o;1;2i ;@;3[o;5
+;0[o;6
+; ;!;iT;{ ;7;8;"
+.pusho;; ;!;@U;i;"[ ;iT;#"1;$[ o;+	; ;!;%"blueprint_grid_columns;iT;@U; ;!;%"enumerate;iT;@U;T;iT;[o;4
+;0[ ;%"push-base;iU;@;[ o;9;:o;+	; ;!;%"blueprint_grid_columns;iV;{ ;@;T;;"n;iV;<F;[o;1;2i ;@;3[".push-o;+	; ;!;%"n;iW;{ ;T;iW;[o;4
+;0[o;+	; ;!;%"n;iX;{ ;%"push-margins;iX;@;[ ;=o;; ;!;{ ;i;"[ ;iV;#"1;$[ o;1;2i ;@;3[".prepend-top;T;iY;[o;4
+;0[ ;%"prepend-top;iZ;@;[ o;1;2i ;@;3[".append-bottom;T;i[;[o;4
+;0[ ;%"append-bottom;i\;@;[ o;;i^;@;i ;[ ;[ ;"Æ/* A container for your columns.
+ *
+ * #### Note:
+ * If you use this mixin without the class and want to support ie6
+ * you must set text-align left on your container element in an IE stylesheet. */o;/;0[ ;%"container;ic;@;T;[o;>;2i ;%["
+width;@;?;@;o;+	; ;!;%"blueprint_container_size;id;{ ;id;[ o;>;2i ;%["margin;@;?;@;o;6; ;!;7;A;"0 auto;ie;[ o;4
+;0[ ;%"clearfix;if;@;[ o;;ih;@;i ;[ ;[ ;"k/* The last column in a row needs this mixin or it will end up
+ * on the next row in some browsers. */o;/;0[ ;%"	last;ij;@;T;[o;>;2i ;%["margin-right;@;?;@;o;6; ;!;7;A;"0;ik;[ o;;im;@;i ;[ ;[ ;"9/* Use this mixins to set the width of n columns. */o;/;0[[o;+; ;!;%"n;{ 0[o;+; ;!;%"	last;@¼o;B	; ;!;in;@¼;F;%"column;in;@;T;[o;4
+;0[o;+	; ;!;%"	last;io;{ ;%"column-base;io;@;[ o;4
+;0[o;+	; ;!;%"n;ip;{ ;%"	span;ip;@;[ o;;ir;@;i ;[ ;[ ;"Â/* Set only the width of an element to align it with the grid.
+ * Most of the time you'll want to use `+column` instead.
+ *
+ * This mixin is especially useful for aligning tables to the grid. */o;/;0[[o;+; ;!;%"n;{ 0[o;+; ;!;%"override;@Úo;B	; ;!;iv;@Ú;F;%"	span;iv;@;T;[o;;o;'; ;!;iw;(;);{ ;*o;'; ;!;iw;(;.;@ã;*o;+	; ;!;%"blueprint_grid_width;iw;@ã;,o;+	; ;!;%"n;iw;@ã;,o;'; ;!;iw;(;.;@ã;*o;+	; ;!;%"blueprint_grid_margin;iw;@ã;,o;'; ;!;iw;(;-;@ã;*o;+	; ;!;%"n;iw;@ã;,o;; ;!;@ã;i;"[ ;iw;#"1;$[ ;%"
+width;iw;@;[ ;&0o:Sass::Tree::IfNode;o;+	; ;!;%"override;ix;{ :@last_elseo;C
+;0;D@ù;@;T;[o;>;2i ;%["
+width;@;?;@;o;+	; ;!;%"
+width;i{;{ ;i{;[ ;@;T;ix:
+@else@ù;[o;>;2i ;%["
+width;@;?;@;o;'; ;!;iy;(:concat;{ ;*o;+	; ;!;%"
+width;iy;@;,o;6
+; ;!;iy;@;7;A;"!important;iy;[ o;;i};@;i ;[ ;[ ;"˜/* The basic set of styles needed to make an element
+ * behave like a column:
+ *
+ * * floated to left
+ * * gutter margin on the right (unless the last column)
+ * * Some IE fixes
+ *
+ * #### Note:
+ * This mixin gets applied automatically when using `+column`
+ * so you probably don't need to use it directly unless
+ * you need to deviate from the grid or are trying
+ * to reduce the amount of generated CSS. */o;/;0[[o;+; ;!;%"	last;{ o;B	; ;!;i„;@;F;%"column-base;i„;@;T;[o;4
+;0[ ;%"float-left;i…;@;[ o;C;o;+	; ;!;%"	last;i†;{ ;Do;C
+;0;D@";@;T;[o;>;2i ;%["margin-right;@;?;@;o;+	; ;!;%"blueprint_grid_margin;i‰;{ ;i‰;[ ;@;T;i†;E@";[o;4
+;0[ ;%"	last;i‡;@;[ o;1;2i ;@;3["* html &;T;iŠ;[o;>;2i ;%["overflow-x;@;?;@;o;6; ;!;7;A;"hidden;i‹;[ o;;i;@;i ;[ ;[ ;"m/* Mixin to a column to append n empty columns to the right
+ * by adding right padding to the column. */o;/;0[[o;+; ;!;%"n;{ 0;%"append;i;@;T;[o;>;2i ;%["padding-right;@;?;@;o;'; ;!;i;(;.;{ ;*o;+	; ;!;%"blueprint_grid_outer_width;i;@J;,o;+	; ;!;%"n;i;@J;i;[ o;;i’;@;i ;[ ;[ ;"k/* Mixin to a column to append n empty columns to the left
+ * by adding left padding to the column. */o;/;0[[o;+; ;!;%"n;{ 0;%"prepend;i”;@;T;[o;>;2i ;%["padding-left;@;?;@;o;'; ;!;i•;(;.;{ ;*o;+	; ;!;%"blueprint_grid_outer_width;i•;@`;,o;+	; ;!;%"n;i•;@`;i•;[ o;;i—;@;i ;[ ;[ ;" /* Adds trailing margin. */o;/;0[[o;+; ;!;%"amount;{ o;; ;!;@o;f1.5;"["em;i˜;#"
+1.5em;$[ ;%"append-bottom;i˜;@;T;[o;>;2i ;%["margin-bottom;@;?;@;o;+	; ;!;%"amount;i™;{ ;i™;[ o;;i›;@;i ;[ ;[ ;"/* Adds leading margin. */o;/;0[[o;+; ;!;%"amount;{ o;; ;!;@ˆ;f1.5;"["em;iœ;#"
+1.5em;$[ ;%"prepend-top;iœ;@;T;[o;>;2i ;%["margin-top;@;?;@;o;+	; ;!;%"amount;i;{ ;i;[ o;;iŸ;@;i ;[ ;[ ;"&/* Base styles that make it possible to pull an element to the left.
+ * #### Note:
+ * This mixin gets applied automatically when using `+pull`
+ * so you probably don't need to use it directly unless
+ * you need to deviate from the grid or are trying
+ * to reduce the amount of generated CSS. */o;/;0[ ;%"pull-base;i¥;@;T;[o;4
+;0[ ;%"float-left;i¦;@;[ o;>;2i ;%["position;@;?;@;o;6; ;!;7;A;"relative;i§;[ o;;i©;@;i ;[ ;[ ;"/* The amount of pulling for element to the left.
+ * #### Note:
+ * This mixin gets applied automatically when using `+pull`
+ * so you probably don't need to use it directly unless
+ * you need to deviate from the grid or are trying
+ * to reduce the amount of generated CSS. */o;/;0[[o;+; ;!;%"n;{ 0[o;+; ;!;%"	last;@³o;B	; ;!;i¯;@³;F;%"pull-margins;i¯;@;T;[o;C;o;+	; ;!;%"	last;i°;{ ;Do;C
+;0;D@¾;@;T;[o;>;2i ;%["margin-left;@;?;@;o;'; ;!;i³;(;.;{ ;*o:!Sass::Script::UnaryOperation
+; ;!;i³;(;-;@Ä:@operando;+	; ;!;%"blueprint_grid_outer_width;i³;@Ä;,o;+	; ;!;%"n;i³;@Ä;i³;[ ;@;T;i°;E@¾;[o;>;2i ;%["margin-left;@;?;@;o;'; ;!;i±;(;);{ ;*o;'; ;!;i±;(;.;@Ð;*o;G
+; ;!;i±;(;-;@Ð;Ho;+	; ;!;%"blueprint_grid_outer_width;i±;@Ð;,o;+	; ;!;%"n;i±;@Ð;,o;+	; ;!;%"blueprint_grid_margin;i±;@Ð;i±;[ o;;iµ;@;i ;[ ;[ ;"/* Moves a column `n` columns to the left.
+ *
+ * This mixin can also be used to change the display order of columns.
+ *
+ * If pulling past the last (visually) element in a row,
+ * pass `true` as the second argument so the calculations can adjust
+ * accordingly. */o;;i½;@;i ;[ ;[ ;"/* For example:
+ *
+ * HTML:
+ * <pre class="source-code html">
+ * <div id="one">One</div>
+ * <div id="two">Two</div>
+ * </pre>
+ * Sass:
+ * <pre class="source-code sass">
+ * #one
+ *   +column(18, true)
+ *   +prepend(6)
+ * #two
+ *   +column(6)
+ *   +pull(18, true)
+ * </pre> */o;/;0[[o;+; ;!;%"n;{ 0[o;+; ;!;%"	last;@ço;B	; ;!;iÍ;@ç;F;%"	pull;iÍ;@;T;[o;4
+;0[ ;%"pull-base;iÎ;@;[ o;4
+;0[o;+	; ;!;%"n;iÏ;{ o;+	; ;!;%"	last;iÏ;@ö;%"pull-margins;iÏ;@;[ o;/;0[ ;%"push-base;iÑ;@;T;[o;4
+;0[ ;%"float-right;iÒ;@;[ o;>;2i ;%["position;@;?;@;o;6; ;!;7;A;"relative;iÓ;[ o;/;0[[o;+; ;!;%"n;{ 0;%"push-margins;iÕ;@;T;[o;>;2i ;%["margin;@;?;@;o;'; ;!;iÖ;(;F;{ ;*o;'; ;!;iÖ;(;F;@;*o;'; ;!;iÖ;(;F;@;*o;; ;!;@;i ;"[ ;iÖ;#"0;$[ ;,o;'; ;!;iÖ;(;.;@;*o;G
+; ;!;iÖ;(;-;@;Ho;+	; ;!;%"blueprint_grid_outer_width;iÖ;@;,o;+	; ;!;%"n;iÖ;@;,o;; ;!;@;f1.5;"["em;iÖ;#"
+1.5em;$[ ;,o;'; ;!;iÖ;(;.;@;*o;+	; ;!;%"blueprint_grid_outer_width;iÖ;@;,o;+	; ;!;%"n;iÖ;@;iÖ;[ o;;iØ;@;i ;[ ;[ ;">/* mixin to a column to push it n columns to the right */o;/;0[[o;+; ;!;%"n;{ 0;%"	push;iÙ;@;T;[o;4
+;0[ ;%"push-base;iÚ;@;[ o;4
+;0[o;+	; ;!;%"n;iÛ;{ ;%"push-margins;iÛ;@;[ o;;iÝ;@;i ;[ ;[ ;"1/* Border on right hand side of a column. */o;/;0[[o;+; ;!;%"border_color;{ o:Sass::Script::Color
+; ;!;iÞ;@N;0:@attrs{	:rediî:
+greeniî:	blueiî:
+alphai[o;+; ;!;%"border_width;@No;; ;!;@N;i;"["px;iÞ;#"1px;$[ ;%"border;iÞ;@;T;[o;>;2i ;%["padding-right;@;?;@;o;'; ;!;iß;(;-;{ ;*o;'; ;!;iß;(:div;@_;*o;+	; ;!;%"blueprint_grid_margin;iß;@_;,o;; ;!;@_;i;"[ ;iß;#"2;$[ ;,o;+	; ;!;%"border_width;iß;@_;iß;[ o;>;2i ;%["margin-right;@;?;@;o;'; ;!;ià;(;O;{ ;*o;+	; ;!;%"blueprint_grid_margin;ià;@n;,o;; ;!;@n;i;"[ ;ià;#"2;$[ ;ià;[ o;>;2i ;%["border-right;@;?;@;o: Sass::Script::Interpolation:@beforeo;P;Q0:@aftero;6
+; ;!;iá;{ ;7;A;"
+solid;@|:	@mido;+	; ;!;%"border_width;iá;@|:@originally_textF:@whitespace_afteri ;iá:@whitespace_beforei´;R0;@|;So;+	; ;!;%"border_color;iá;@|;TF;U0;iá;ViË;iá;[ o;;iã;@;i ;[ ;[ ;"9/* Border with more whitespace, spans one column. */o;/;0[[o;+; ;!;%"border_color;{ o;I
+; ;!;iä;@Œ;0;J{	;Kiî;Liî;Miî;Ni[o;+; ;!;%"border_width;@Œo;; ;!;@Œ;i;"["px;iä;#"1px;$[ ;%"colborder;iä;@;T;[o;>;2i ;%["padding-right;@;?;@;o;5
+;0[o;'; ;!;iå;(;O;{ ;*o;'; ;!;iå;(;-;@Ÿ;*o;'; ;!;iå;(;);@Ÿ;*o;+	; ;!;%"blueprint_grid_width;iå;@Ÿ;,o;'; ;!;iå;(;.;@Ÿ;*o;; ;!;@Ÿ;i;"[ ;iå;#"2;$[ ;,o;+	; ;!;%"blueprint_grid_margin;iå;@Ÿ;,o;+	; ;!;%"border_width;iå;@Ÿ;,o;; ;!;@Ÿ;i;"[ ;iå;#"2;$[ ; ;!;%"
+floor;iå;@Ÿ;iå;[ o;>;2i ;%["margin-right;@;?;@;o;5
+;0[o;'; ;!;iæ;(;O;{ ;*o;'; ;!;iæ;(;-;@¹;*o;'; ;!;iæ;(;);@¹;*o;+	; ;!;%"blueprint_grid_width;iæ;@¹;,o;'; ;!;iæ;(;.;@¹;*o;; ;!;@¹;i;"[ ;iæ;#"2;$[ ;,o;+	; ;!;%"blueprint_grid_margin;iæ;@¹;,o;+	; ;!;%"border_width;iæ;@¹;,o;; ;!;@¹;i;"[ ;iæ;#"2;$[ ; ;!;%"	ceil;iæ;@¹;iæ;[ o;>;2i ;%["border-right;@;?;@;o;P;Qo;P;Q0;Ro;6
+; ;!;iç;{ ;7;A;"
+solid;@Ó;So;+	; ;!;%"border_width;iç;@Ó;TF;Ui ;iç;Vi#;R0;@Ó;So;+	; ;!;%"border_color;iç;@Ó;TF;U0;iç;Vi:;iç;[ o;;ié;@;i ;[ ;[ ;"J/* Mixin this to an hr to make a horizontal ruler across a column. */o;/;0[[o;+; ;!;%"border_color;{ o;I
+; ;!;iê;@ã;0;J{	;KiÝ;LiÝ;MiÝ;Ni;%"colruler;iê;@;T;[o;>;2i ;%["background;@;?;@;o;+	; ;!;%"border_color;ië;{ ;ië;[ o;>;2i ;%["
+color;@;?;@;o;+	; ;!;%"border_color;iì;{ ;iì;[ o;>;2i ;%["
+clear;@;?;@;o;6; ;!;7;A;"	both;ií;[ o;>;2i ;%["
+float;@;?;@;o;6; ;!;7;A;"	none;iî;[ o;>;2i ;%["
+width;@;?;@;o;6; ;!;7;A;"	100%;iï;[ o;>;2i ;%["height;@;?;@;o;6; ;!;7;A;"
+0.1em;ið;[ o;>;2i ;%["margin;@;?;@;o;6; ;!;7;A;"0 0 1.45em;iñ;[ o;>;2i ;%["border;@;?;@;o;6; ;!;7;A;"	none;iò;[ o;;iô;@;i ;[ ;[ ;"K/* Mixin this to an hr to make a horizontal spacer across a column. */o;/;0[ ;%"colspacer;iõ;@;T;[	o;4
+;0[ ;%"colruler;iö;@;[ o;>;2i ;%["background;@;?;@;o;6; ;!;7;A;"
+white;i÷;[ o;>;2i ;%["
+color;@;?;@;o;6; ;!;7;A;"
+white;iø;[ o;>;2i ;%["visibility;@;?;@;o;6; ;!;7;A;"hidden;iù;[ 

@@ -14,7 +14,7 @@
 				display: block;
 				text-align: center;
 				padding-top: 11px;
-				color: #7a0414;
+				color: #3b4709;
 				text-decoration: none;
 				text-transform: uppercase;
 				&:hover {
@@ -55,11 +55,11 @@
 		margin-left: 10px;
 		margin-bottom: 4px;
 		a {
-			@include link-colors(#000, #7a0414, #7a0414, #000, #7a0414);
+			@include link-colors(#000, #3b4709, #3b4709, #000, #3b4709);
 			text-decoration: none;
 		}
 		.active a{
-			@include link-colors(#7a0414, #7a0414, #7a0414, #7a0414, #7a0414);
+			@include link-colors(#3b4709, #3b4709, #3b4709, #3b4709, #3b4709);
 		}
 
 	}

@@ -2078,51 +2078,55 @@ html, body {
   margin-bottom: 0px!important;
 }
 /* line 216, ../src/partials/_content.scss */
+.container .content .peoplelist h2 {
+  margin-bottom: 10px;
+}
+/* line 220, ../src/partials/_content.scss */
 .container .content .peoplelist p {
   float: left!important;
   margin-right: 10px;
   width: 180px;
   margin-bottom: 0px;
 }
-/* line 222, ../src/partials/_content.scss */
+/* line 226, ../src/partials/_content.scss */
 .container .content .peoplelist ul {
   overflow: hidden;
   background: none #efefef;
   height: 167px;
 }
-/* line 226, ../src/partials/_content.scss */
+/* line 230, ../src/partials/_content.scss */
 .container .content .peoplelist ul li {
   border-bottom: none!important;
   background: none!important;
   padding: 4px 0 0 10px;
 }
-/* line 235, ../src/partials/_content.scss */
+/* line 239, ../src/partials/_content.scss */
 .container .content .articlelist {
   display: block;
   overflow: hidden;
   margin-bottom: 20px;
 }
-/* line 239, ../src/partials/_content.scss */
+/* line 243, ../src/partials/_content.scss */
 .container .content .articlelist h2 {
   margin: 0 0 8px;
   clear: both;
   min-height: 55px;
 }
-/* line 244, ../src/partials/_content.scss */
+/* line 248, ../src/partials/_content.scss */
 .container .content .articlelist a {
   color: #3b4709;
 }
-/* line 247, ../src/partials/_content.scss */
+/* line 251, ../src/partials/_content.scss */
 .container .content .articlelist p {
   margin-bottom: 0px;
 }
-/* line 257, ../src/partials/_content.scss */
+/* line 261, ../src/partials/_content.scss */
 .container .column-1 ul,
 .container .column-3-4 ul {
   margin: 0;
   padding: 10px;
 }
-/* line 261, ../src/partials/_content.scss */
+/* line 265, ../src/partials/_content.scss */
 .container .column-1 ul li,
 .container .column-3-4 ul li {
   padding: 0 0 10px 0;

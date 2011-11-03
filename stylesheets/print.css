@@ -2094,7 +2094,7 @@ html, body {
 .container .content .peoplelist ul li {
   border-bottom: none!important;
   background: none!important;
-  padding: 2px;
+  padding: 0 0 2px 5px;
 }
 /* line 235, ../src/partials/_content.scss */
 .container .content .articlelist {

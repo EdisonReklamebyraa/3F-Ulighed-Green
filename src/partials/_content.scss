@@ -211,10 +211,12 @@
 			}
 		}
     .peoplelist {
+      margin-bottom: 0px!important;
       p {
          float: left!important;
          margin-right: 10px;
          width: 180px;
+         margin-bottom: 0px;
       }
       ul {
         overflow: hidden;

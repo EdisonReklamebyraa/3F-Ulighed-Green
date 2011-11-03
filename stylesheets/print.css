@@ -2094,34 +2094,35 @@ html, body {
 .container .content .peoplelist ul li {
   border-bottom: none!important;
   background: none!important;
+  padding: 2px;
 }
-/* line 234, ../src/partials/_content.scss */
+/* line 235, ../src/partials/_content.scss */
 .container .content .articlelist {
   display: block;
   overflow: hidden;
   margin-bottom: 20px;
 }
-/* line 238, ../src/partials/_content.scss */
+/* line 239, ../src/partials/_content.scss */
 .container .content .articlelist h2 {
   margin: 0 0 8px;
   clear: both;
   min-height: 55px;
 }
-/* line 243, ../src/partials/_content.scss */
+/* line 244, ../src/partials/_content.scss */
 .container .content .articlelist a {
   color: #3b4709;
 }
-/* line 246, ../src/partials/_content.scss */
+/* line 247, ../src/partials/_content.scss */
 .container .content .articlelist p {
   margin-bottom: 0px;
 }
-/* line 256, ../src/partials/_content.scss */
+/* line 257, ../src/partials/_content.scss */
 .container .column-1 ul,
 .container .column-3-4 ul {
   margin: 0;
   padding: 10px;
 }
-/* line 260, ../src/partials/_content.scss */
+/* line 261, ../src/partials/_content.scss */
 .container .column-1 ul li,
 .container .column-3-4 ul li {
   padding: 0 0 10px 0;

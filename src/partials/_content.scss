@@ -220,9 +220,11 @@
       }
       ul {
         overflow: hidden;
+        background: none #efefef;
+        height: 167px;
         li {
-          @include pretty-bullets("bullet-arrow.png", 6px, 6px, 30px, 20px);
           border-bottom: none!important;
+          background: none!important;
           
         }
       }

@@ -2086,45 +2086,41 @@ html, body {
 /* line 221, ../src/partials/_content.scss */
 .container .content .peoplelist ul {
   overflow: hidden;
+  background: none #efefef;
+  height: 167px;
 }
-/* line 223, ../src/partials/_content.scss */
+/* line 225, ../src/partials/_content.scss */
 .container .content .peoplelist ul li {
-  margin-left: 0;
   border-bottom: none!important;
+  background: none!important;
 }
-/* line 29, ../../../../../.gem/ruby/1.8/gems/compass-0.10.6/frameworks/compass/stylesheets/compass/utilities/lists/_bullets.scss */
-.container .content .peoplelist ul li li {
-  padding-left: 20px;
-  background: url('../images/bullet-arrow.png?1320308854') no-repeat 7px 12px;
-  list-style-type: none;
-}
-/* line 231, ../src/partials/_content.scss */
+/* line 233, ../src/partials/_content.scss */
 .container .content .articlelist {
   display: block;
   overflow: hidden;
   margin-bottom: 20px;
 }
-/* line 235, ../src/partials/_content.scss */
+/* line 237, ../src/partials/_content.scss */
 .container .content .articlelist h2 {
   margin: 0 0 8px;
   clear: both;
   min-height: 55px;
 }
-/* line 240, ../src/partials/_content.scss */
+/* line 242, ../src/partials/_content.scss */
 .container .content .articlelist a {
   color: #3b4709;
 }
-/* line 243, ../src/partials/_content.scss */
+/* line 245, ../src/partials/_content.scss */
 .container .content .articlelist p {
   margin-bottom: 0px;
 }
-/* line 253, ../src/partials/_content.scss */
+/* line 255, ../src/partials/_content.scss */
 .container .column-1 ul,
 .container .column-3-4 ul {
   margin: 0;
   padding: 10px;
 }
-/* line 257, ../src/partials/_content.scss */
+/* line 259, ../src/partials/_content.scss */
 .container .column-1 ul li,
 .container .column-3-4 ul li {
   padding: 0 0 10px 0;

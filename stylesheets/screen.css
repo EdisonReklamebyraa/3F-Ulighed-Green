@@ -2089,7 +2089,7 @@ html, body {
 }
 /* line 223, ../src/partials/_content.scss */
 .container .content .peoplelist ul li {
-  border-bottom: none;
+  border-bottom: none!important;
 }
 /* line 230, ../src/partials/_content.scss */
 .container .content .articlelist {

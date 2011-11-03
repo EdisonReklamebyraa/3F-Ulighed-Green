@@ -2062,7 +2062,7 @@ html, body {
 /* line 201, ../src/partials/_content.scss */
 .container .content .links a {
   text-decoration: none;
-  color: #000;
+  color: #333333;
 }
 /* line 204, ../src/partials/_content.scss */
 .container .content .links a:hover {
